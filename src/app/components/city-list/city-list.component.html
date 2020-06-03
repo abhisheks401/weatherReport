@@ -1,0 +1,30 @@
+<form [formGroup]="addCityForm" (ngSubmit)="addCity()">
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" formControlName="city" placeholder="Type City Name"  
+    [class.is-invalid]="city.touched && city.invalid">
+    <div class="input-group-append">
+      <input type="submit" value="+" class="btn btn-success" >
+    </div>
+  </div>
+  <div class="alert alert-success p-2 mb-2" *ngIf="fSuccess">City Added Successfully</div>
+  <div class="alert alert-success p-2 mb-2" *ngIf="updated">Updated Successfully</div>
+  <div class="alert alert-success p-2 mb-2" *ngIf="fFailed">{{ failedStatusText }}</div>
+</form>
+
+<h4 class="text-white mb-3">Recent Locations</h4>
+<ul class="list-unstyled text-white">
+  <li class="mb-1 w-100 pull-left" *ngFor="let cities of listOfCity; let cityNum = index">
+    <a (click)="loadWeatherReport([cities.city])">{{ cities.city | titlecase }} - {{cities.celsius}}C {{cities.type}}</a>
+    <span class="pull-right">
+      <button (click)="updateWeather([cities],cityNum)" class="btn btn-link text-white">
+        <fa name="refresh" class="mr-2"></fa> 
+      </button>
+      <button (click)="removeCity(cityNum)" class="btn btn-link text-white">
+        <fa name="close"></fa>
+      </button>
+    </span>
+  </li>
+</ul>
+<div class="w-100 text-right">
+  <button class="btn btn-danger" (click)="removeAll()">Clear</button>
+</div>
